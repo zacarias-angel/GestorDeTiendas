@@ -7,14 +7,13 @@ interface StoreLayoutProps {
   }
 }
 
-export async function generateMetadata({ params }: StoreLayoutProps): Promise<Metadata> {
-  // TODO: Obtener datos de la tienda desde el backend
-  const storeName = params.storeSlug.charAt(0).toUpperCase() + params.storeSlug.slice(1)
-  
+export async function generateMetadata({ params }: { params: { storeSlug: string } }): Promise<Metadata> {
+  const storeName = params.storeSlug.charAt(0).toUpperCase() + params.storeSlug.slice(1);
+
   return {
     title: `${storeName} - Tienda Online`,
     description: `Bienvenido a ${storeName}. Encuentra los mejores productos aquí.`,
-  }
+  };
 }
 
 export default function StoreLayout({ children, params }: StoreLayoutProps) {
