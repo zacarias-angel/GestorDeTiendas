@@ -3,6 +3,7 @@ interface StorePageProps {
     storeSlug: string
   }
 }
+import Image from 'next/image';
 
 export default function StorePage({ params }: StorePageProps) {
   // TODO: Obtener datos de la tienda y productos desde el backend
@@ -95,7 +96,7 @@ export default function StorePage({ params }: StorePageProps) {
           {categories.map((category) => (
             <div key={category.name} className="group relative">
               <div className="relative w-full h-48 bg-gray-200 rounded-lg overflow-hidden group-hover:opacity-75 transition-opacity">
-                <img
+                <Image
                   src={category.image}
                   alt={category.name}
                   className="w-full h-full object-cover"
@@ -126,7 +127,7 @@ export default function StorePage({ params }: StorePageProps) {
           {featuredProducts.map((product) => (
             <div key={product.id} className="group relative">
               <div className="relative w-full h-64 bg-gray-200 rounded-lg overflow-hidden group-hover:opacity-75 transition-opacity">
-                <img
+                <Image
                   src={product.image}
                   alt={product.name}
                   className="w-full h-full object-cover object-center"

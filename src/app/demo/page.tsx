@@ -1,5 +1,5 @@
 'use client'
-
+import Image from 'next/image';
 import { useState, useEffect } from 'react'
 
 interface Product {
@@ -126,7 +126,7 @@ export default function DemoPage() {
                   className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow flex flex-col"
                 >
                   <div className="flex-1 flex items-center justify-center bg-gray-50">
-                    <img
+                    <Image
                       src={product.image}
                       alt={product.title}
                       className="w-full h-48 object-contain p-4"
@@ -174,7 +174,7 @@ export default function DemoPage() {
                         key={item.id}
                         className="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg"
                       >
-                        <img
+                        <Image
                           src={item.image}
                           alt={item.title}
                           className="w-12 h-12 object-contain"

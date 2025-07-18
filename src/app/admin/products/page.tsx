@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-
+import Image from 'next/image';
 export default function ProductsPage() {
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedCategory, setSelectedCategory] = useState('all')
@@ -121,7 +121,7 @@ export default function ProductsPage() {
                 <div className="flex items-center justify-between">
                   <div className="flex items-center">
                     <div className="flex-shrink-0 h-16 w-16">
-                      <img
+                      <Image
                         className="h-16 w-16 rounded-lg object-cover"
                         src={product.image}
                         alt={product.name}

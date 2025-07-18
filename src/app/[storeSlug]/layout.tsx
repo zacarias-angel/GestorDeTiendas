@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-
+import Image from 'next/image'
 interface StoreLayoutProps {
   children: React.ReactNode
   params: {
@@ -34,7 +34,7 @@ export default function StoreLayout({ children, params }: StoreLayoutProps) {
           <div className="flex justify-between items-center py-4">
             <div className="flex items-center">
               {storeConfig.logo ? (
-                <img
+                <Image
                   src={storeConfig.logo}
                   alt={storeConfig.name}
                   className="h-8 w-auto"
