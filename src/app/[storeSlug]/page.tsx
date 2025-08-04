@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { useParams, useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import Image from 'next/image'
 import { use } from 'react'
 
@@ -48,7 +48,6 @@ export default function StorePage({ params }: StorePageProps) {
   const [products, setProducts] = useState<Product[]>([])
   const [cart, setCart] = useState<CartItem[]>([])
   const [loading, setLoading] = useState(true)
-  const [storeValid, setStoreValid] = useState(false)
   const [showAccessModal, setShowAccessModal] = useState(false)
   const [accessCode, setAccessCode] = useState('')
   const [hasAccess, setHasAccess] = useState(false)
@@ -61,7 +60,6 @@ export default function StorePage({ params }: StorePageProps) {
   // Validar si la tienda existe
   useEffect(() => {
     const isValidStore = VALID_STORES.includes(storeSlug.toLowerCase())
-    setStoreValid(isValidStore)
     
     if (!isValidStore) {
       setShowAccessModal(true)

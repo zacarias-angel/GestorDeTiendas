@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import Image from 'next/image'
+
 interface StoreLayoutProps {
   children: React.ReactNode
   params: {
@@ -16,7 +16,7 @@ export async function generateMetadata({ params }: { params: { storeSlug: string
   };
 }
 
-export default function StoreLayout({ children, params }: StoreLayoutProps) {
+export default function StoreLayout({ children }: StoreLayoutProps) {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Main Content */}
