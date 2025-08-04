@@ -1,6 +1,6 @@
 import Link from 'next/link'
 
-export default function Home() {
+export default function HomePage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
       {/* Header */}
@@ -120,6 +120,80 @@ export default function Home() {
                     Nuestro equipo está disponible para ayudarte cuando lo necesites.
                   </p>
                 </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* How it works */}
+        <div className="py-12 bg-gray-50">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="lg:text-center">
+              <h2 className="text-base text-blue-600 font-semibold tracking-wide uppercase">Cómo Funciona</h2>
+              <p className="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
+                En 3 simples pasos
+              </p>
+            </div>
+
+            <div className="mt-10">
+              <div className="space-y-10 md:space-y-0 md:grid md:grid-cols-3 md:gap-x-8 md:gap-y-10">
+                <div className="text-center">
+                  <div className="flex items-center justify-center h-12 w-12 rounded-md bg-blue-500 text-white mx-auto">
+                    <span className="text-lg font-bold">1</span>
+                  </div>
+                  <h3 className="mt-6 text-lg leading-6 font-medium text-gray-900">Regístrate</h3>
+                  <p className="mt-2 text-base text-gray-500">
+                    Crea tu cuenta en menos de 2 minutos. Solo necesitas un email.
+                  </p>
+                </div>
+
+                <div className="text-center">
+                  <div className="flex items-center justify-center h-12 w-12 rounded-md bg-blue-500 text-white mx-auto">
+                    <span className="text-lg font-bold">2</span>
+                  </div>
+                  <h3 className="mt-6 text-lg leading-6 font-medium text-gray-900">Personaliza</h3>
+                  <p className="mt-2 text-base text-gray-500">
+                    Agrega tus productos, personaliza el diseño y configura tu tienda.
+                  </p>
+                </div>
+
+                <div className="text-center">
+                  <div className="flex items-center justify-center h-12 w-12 rounded-md bg-blue-500 text-white mx-auto">
+                    <span className="text-lg font-bold">3</span>
+                  </div>
+                  <h3 className="mt-6 text-lg leading-6 font-medium text-gray-900">Vende</h3>
+                  <p className="mt-2 text-base text-gray-500">
+                    ¡Listo! Tu tienda está online y puedes empezar a vender inmediatamente.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* CTA Section */}
+        <div className="bg-blue-600">
+          <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:py-16 lg:px-8 lg:flex lg:items-center lg:justify-between">
+            <h2 className="text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
+              <span className="block">¿Listo para empezar?</span>
+              <span className="block text-blue-200">Crea tu tienda hoy mismo.</span>
+            </h2>
+            <div className="mt-8 flex lg:mt-0 lg:flex-shrink-0">
+              <div className="inline-flex rounded-md shadow">
+                <Link
+                  href="/register"
+                  className="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-blue-600 bg-white hover:bg-blue-50"
+                >
+                  Empezar Gratis
+                </Link>
+              </div>
+              <div className="ml-3 inline-flex rounded-md shadow">
+                <Link
+                  href="/demo"
+                  className="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-500 hover:bg-blue-400"
+                >
+                  Ver Demo
+                </Link>
               </div>
             </div>
           </div>

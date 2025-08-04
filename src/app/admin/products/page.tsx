@@ -1,50 +1,62 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import Image from 'next/image';
+import Image from 'next/image'
+
+interface Product {
+  id: number
+  title: string
+  price: number
+  description: string
+  category: string
+  image: string
+  rating: {
+    rate: number
+    count: number
+  }
+}
+
 export default function ProductsPage() {
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedCategory, setSelectedCategory] = useState('all')
+  const [products, setProducts] = useState<Product[]>([])
+  const [loading, setLoading] = useState(true)
 
-  // Datos de ejemplo - en el futuro vendrán del backend
-  const products = [
-    {
-      id: 1,
-      name: 'Camiseta Básica',
-      price: 29.99,
-      stock: 50,
-      category: 'Ropa',
-      image: 'https://via.placeholder.com/150',
-      status: 'active'
-    },
-    {
-      id: 2,
-      name: 'Zapatillas Deportivas',
-      price: 89.99,
-      stock: 25,
-      category: 'Calzado',
-      image: 'https://via.placeholder.com/150',
-      status: 'active'
-    },
-    {
-      id: 3,
-      name: 'Auriculares Bluetooth',
-      price: 59.99,
-      stock: 0,
-      category: 'Electrónicos',
-      image: 'https://via.placeholder.com/150',
-      status: 'inactive'
-    },
-  ]
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await fetch('https://fakestoreapi.com/products')
+        const data = await response.json()
+        setProducts(data)
+      } catch (error) {
+        console.error('Error fetching products:', error)
+      } finally {
+        setLoading(false)
+      }
+    }
 
-  const categories = ['all', 'Ropa', 'Calzado', 'Electrónicos', 'Accesorios']
+    fetchProducts()
+  }, [])
+
+  const categories = ['all', "men's clothing", "women's clothing", 'jewelery', 'electronics']
 
   const filteredProducts = products.filter(product => {
-    const matchesSearch = product.name.toLowerCase().includes(searchTerm.toLowerCase())
+    const matchesSearch = product.title.toLowerCase().includes(searchTerm.toLowerCase())
     const matchesCategory = selectedCategory === 'all' || product.category === selectedCategory
     return matchesSearch && matchesCategory
   })
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
+          <p className="mt-4 text-gray-600">Cargando productos...</p>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div>
@@ -121,34 +133,32 @@ export default function ProductsPage() {
                 <div className="flex items-center justify-between">
                   <div className="flex items-center">
                     <div className="flex-shrink-0 h-16 w-16">
-                      <Image
-                        className="h-16 w-16 rounded-lg object-cover"
-                        src={product.image}
-                        alt={product.name}
-                      />
+                                             <Image
+                         className="h-16 w-16 rounded-lg object-cover"
+                         src={product.image}
+                         alt={product.title}
+                         width={64}
+                         height={64}
+                       />
                     </div>
-                    <div className="ml-4">
-                      <div className="flex items-center">
-                        <p className="text-sm font-medium text-gray-900">{product.name}</p>
-                        <span className={`ml-2 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                          product.status === 'active' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'
-                        }`}>
-                          {product.status === 'active' ? 'Activo' : 'Inactivo'}
-                        </span>
-                      </div>
-                      <p className="text-sm text-gray-500">{product.category}</p>
-                      <p className="text-sm text-gray-500">
-                        Stock: {product.stock} unidades
-                      </p>
-                    </div>
+                                         <div className="ml-4">
+                       <div className="flex items-center">
+                         <p className="text-sm font-medium text-gray-900">{product.title}</p>
+                         <span className="ml-2 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                           Activo
+                         </span>
+                       </div>
+                       <p className="text-sm text-gray-500">{product.category}</p>
+                       <p className="text-sm text-gray-500">
+                         Rating: {product.rating.rate} ⭐ ({product.rating.count} reviews)
+                       </p>
+                     </div>
                   </div>
                   <div className="flex items-center space-x-4">
-                    <div className="text-right">
-                      <p className="text-lg font-semibold text-gray-900">${product.price}</p>
-                      {product.stock === 0 && (
-                        <p className="text-sm text-red-600">Sin stock</p>
-                      )}
-                    </div>
+                                         <div className="text-right">
+                       <p className="text-lg font-semibold text-gray-900">${product.price}</p>
+                       <p className="text-sm text-gray-500">Disponible</p>
+                     </div>
                     <div className="flex space-x-2">
                       <Link
                         href={`/admin/products/${product.id}/edit`}
