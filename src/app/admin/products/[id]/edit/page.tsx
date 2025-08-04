@@ -41,7 +41,9 @@ export default function EditProductPage({ params }: { params: Promise<{ id: stri
   })
 
   const [imagePreview, setImagePreview] = useState<string>('')
+  const [imageFile, setImageFile] = useState<File | null>(null)
   const [loading, setLoading] = useState(true)
+  const [useExistingImage, setUseExistingImage] = useState(true)
 
   const categories = [
     "men's clothing",
@@ -84,16 +86,50 @@ export default function EditProductPage({ params }: { params: Promise<{ id: stri
       ...prev,
       [name]: value
     }))
+  }
 
-    if (name === 'image') {
-      setImagePreview(value)
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (file) {
+      // Validar tipo de archivo
+      if (!file.type.startsWith('image/')) {
+        alert('Por favor selecciona un archivo de imagen válido')
+        return
+      }
+
+      // Validar tamaño (máximo 5MB)
+      if (file.size > 5 * 1024 * 1024) {
+        alert('La imagen debe ser menor a 5MB')
+        return
+      }
+
+      setImageFile(file)
+      setUseExistingImage(false)
+      
+      // Crear preview
+      const reader = new FileReader()
+      reader.onload = (e) => {
+        setImagePreview(e.target?.result as string)
+      }
+      reader.readAsDataURL(file)
     }
   }
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
+    
+    if (!useExistingImage && !imageFile) {
+      alert('Por favor selecciona una imagen para el producto')
+      return
+    }
+
     // TODO: Implementar llamada al backend
     console.log('Producto a actualizar:', formData)
+    if (imageFile) {
+      console.log('Nueva imagen:', imageFile)
+    } else {
+      console.log('Usando imagen existente')
+    }
     alert('Producto actualizado exitosamente')
   }
 
@@ -214,18 +250,36 @@ export default function EditProductPage({ params }: { params: Promise<{ id: stri
           {/* Imagen */}
           <div>
             <label htmlFor="image" className="block text-sm font-medium text-gray-700 mb-2">
-              URL de la Imagen
+              Imagen del Producto
             </label>
-            <input
-              type="url"
-              id="image"
-              name="image"
-              value={formData.image}
-              onChange={handleInputChange}
-              required
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="https://ejemplo.com/imagen.jpg"
-            />
+            
+            {/* Opción para usar imagen existente */}
+            <div className="mb-3">
+              <label className="flex items-center">
+                <input
+                  type="checkbox"
+                  checked={useExistingImage}
+                  onChange={(e) => setUseExistingImage(e.target.checked)}
+                  className="mr-2"
+                />
+                <span className="text-sm text-gray-600">Usar imagen existente</span>
+              </label>
+            </div>
+
+            {!useExistingImage && (
+              <input
+                type="file"
+                id="image"
+                name="image"
+                accept="image/*"
+                onChange={handleImageChange}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+              />
+            )}
+            
+            <p className="text-xs text-gray-500 mt-1">
+              Formatos: JPG, PNG, GIF. Máximo 5MB
+            </p>
           </div>
         </div>
 
