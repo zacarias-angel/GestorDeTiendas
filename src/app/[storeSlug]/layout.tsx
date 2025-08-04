@@ -2,13 +2,14 @@ import type { Metadata } from 'next'
 
 interface StoreLayoutProps {
   children: React.ReactNode
-  params: {
+  params: Promise<{
     storeSlug: string
-  }
+  }>
 }
 
-export async function generateMetadata({ params }: { params: { storeSlug: string } }): Promise<Metadata> {
-  const storeName = params.storeSlug.charAt(0).toUpperCase() + params.storeSlug.slice(1);
+export async function generateMetadata({ params }: { params: Promise<{ storeSlug: string }> }): Promise<Metadata> {
+  const { storeSlug } = await params
+  const storeName = storeSlug.charAt(0).toUpperCase() + storeSlug.slice(1);
 
   return {
     title: `${storeName} - Tienda Online`,
